@@ -1,0 +1,117 @@
+html, body {
+    height: 100%;
+    background-color: black;
+    color: white;
+}
+
+.layout-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    min-block-size: 100%;
+    overflow-wrap: break-word;
+    overflow: auto;
+    background: black;
+    color: white;
+}
+
+.sign-up-header-container {
+    padding: 32px;
+}
+
+.sign-up-center {
+    flex-grow: 1;
+    display: flex;
+    padding: 0px 32px;
+    box-sizing: border-box;
+}
+
+.sign-up-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+
+}
+
+@media (min-width: 768px) {
+    .sign-up-content {
+        height: auto;
+    }
+}
+
+@media (min-width: 480px) {
+    .sign-up-content {
+        width: 324px;
+    }
+}
+
+.sign-up-content {
+    display: block;
+}
+
+.sign-up-header {
+    margin-bottom: 40px;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+label {
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.sign-up-input {
+    appearance: none;
+    border: 0px;
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    inline-size: 100%;
+    box-sizing: border-box;
+    margin-block: 0px;
+    padding-inline: 14px;
+    background-color: black;
+    box-shadow: inset 0 0 0 1px #878787;
+    color: white;
+    border-radius: 4px;
+    padding-inline: 14px;
+    padding-block-start: 8px;
+    padding-block-end: 8px;
+    min-block-size: 48px;
+}
+
+.hr-line {
+    margin-top: 32px ;
+    height: 1px;
+    background-color: #dedede;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px
+}
+
+.btn-container {
+    padding: 32px 0px;
+}
+
+.login-btn {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #1ed760;
+    color: black;
+    display: flex;
+    border-radius: 500px;
+    font-size: inherit;
+    min-block-size: 48px;
+    align-items: center;
+    justify-content: center;
+    padding-block: 8px;
+    padding-inline: 32px;
+    border: none;
+}

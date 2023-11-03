@@ -136,3 +136,14 @@ label {
   text-decoration: none;
   color: white;
 }
+
+.error-message {
+  color: #f15e6c; 
+  font-size: .875rem;
+  font-weight: 400;
+  margin-block-start: 8px;
+}
+
+.login-boxes.error {
+  border: 1px solid red;
+}

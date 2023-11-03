@@ -33,43 +33,74 @@
               <div class="form-group">
                 <label for="email">Email Address</label>
                 <input
-                type="email"
-                class="sign-up-input"
-                id="email"
-                name="email"
-                placeholder="Enter email"
+                  type="email"
+                  class="sign-up-input{% if 'Email already exists.' in errors %} error{% endif %}"
+                  id="email"
+                  name="email"
+                  placeholder="Enter email"
+                  value="{{ email }}"
                 />
+                <div class="error-message" id="email-error">
+                  {% for error in errors %}
+                    {% if error == 'Email already exists.' %}
+                      {{ error }}
+                    {% endif %}
+                  {% endfor %}
+                </div>
               </div>
               <div class="form-group">
                 <label for="first_name">First Name</label>
                 <input
-                type="text"
-                class="sign-up-input"
-                id="first_name"
-                name="first_name"
-                placeholder="Enter first name"
+                  type="text"
+                  class="sign-up-input{% if 'First name must be greater than 1 character.' in errors %} error{% endif %}"
+                  id="first_name"
+                  name="first_name"
+                  placeholder="Enter first name"
+                  value="{{ first_name }}"
                 />
+                <div class="error-message" id="first_name-error">
+                  {% for error in errors %}
+                    {% if error == 'First name must be greater than 1 character.' %}
+                      {{ error }}
+                    {% endif %}
+                  {% endfor %}
+                </div>
               </div>
               <div class="form-group">
                 <label for="password1">Password</label>
                 <input
-                type="password"
-                class="sign-up-input"
-                id="password1"
-                name="password1"
-                placeholder="Enter password"
+                  type="password"
+                  class="sign-up-input{% if 'Password must be at least 7 characters.' in errors %} error{% endif %}"
+                  id="password1"
+                  name="password1"
+                  placeholder="Enter password"
                 />
+                <div class="error-message" id="password1-error">
+                  {% for error in errors %}
+                    {% if error == 'Password must be at least 7 characters.' %}
+                      {{ error }}
+                    {% endif %}
+                  {% endfor %}
+                </div>
               </div>
               <div class="form-group">
                 <label for="password2">Confirm Password</label>
                 <input
-                type="password"
-                class="sign-up-input"
-                id="password2"
-                name="password2"
-                placeholder="Confirm password"
+                  type="password"
+                  class="sign-up-input{% if 'Passwords don\'t match.' in errors %} error{% endif %}"
+                  id="password2"
+                  name="password2"
+                  placeholder="Confirm password"
                 />
+                <div class="error-message" id="password2-error">
+                  {% for error in errors %}
+                    {% if error == "Passwords don't match." %}
+                      {{ error }}
+                    {% endif %}
+                  {% endfor %}
+                </div>
               </div>
+              
               <br />
               <button type="submit" class="login-btn">Submit</button>
               <hr class="hr-line">

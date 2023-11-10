@@ -1,0 +1,58 @@
+<div class="right-side-container">
+  <header class="topbar">
+    <!-- <div class="topbar-spacer"></div> -->
+    <div class="back-foward-home-btn-container">
+      <button class="topbar-back-btn" disabled class="topbar-back-btn-disabled">
+        <svg class="back-btn" viewBox="0 0 16 16">
+          <path
+            d="M 11.03 0.47 a 0.75 0.75 0 0 1 0 1.06 L 4.56 8 l 6.47 6.47 a 0.75 0.75 0 1 1 -1.06 1.06 L 2.44 8 L 9.97 0.47 a 0.75 0.75 0 0 1 1.06 0 Z"
+          ></path>
+        </svg>
+      </button>
+      <button class="topbar-forward-btn">
+        <svg class="forward-btn" viewbox="0 0 16 16">
+          <path
+            d="M 4.97 0.47 a 0.75 0.75 0 0 0 0 1.06 L 11.44 8 l -6.47 6.47 a 0.75 0.75 0 1 0 1.06 1.06 L 13.56 8 L 6.03 0.47 a 0.75 0.75 0 0 0 -1.06 0 Z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div class="user-btn-container">
+      {% if user.is_authenticated %}
+      <button class="logout-btn" id="logoutBtn">
+        <span class="logout-btn-inner">Logout</span>
+      </button>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          document
+            .getElementById("logoutBtn")
+            .addEventListener("click", function () {
+              window.location.href = "/logout";
+            });
+        });
+      </script>
+
+      {% else %}
+      <button class="signup-btn" id="signupBtn">Sign Up</button>
+      <button class="login-btn" id="loginBtn">
+        <span class="login-btn-inner"> Log in </span>
+      </button>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          document
+            .getElementById("signupBtn")
+            .addEventListener("click", function () {
+              window.location.href = "/sign-up";
+            });
+
+          document
+            .getElementById("loginBtn")
+            .addEventListener("click", function () {
+              window.location.href = "/login";
+            });
+        });
+      </script>
+      {% endif %}
+    </div>
+  </header>
+</div>

@@ -1,0 +1,226 @@
+.right-side-container {
+    background-color: #121212;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;  
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    grid-area: main-view/main-view/main-view/right-sidebar;
+}
+
+.topbar {
+    background-color: rgba(0, 0, 0, .5);
+    align-items: center;
+    contain: content;
+    display: flex;
+    gap: 8px;
+    height: 64px;
+    justify-content: space-between;
+    /* change  to leftsidebarwidth to account for the sidebar moving in the future*/
+    /* padding: 16px var(clamp(16px,16px + (100vw - var(--left-sidebar-width,0px) - var(--panel-width,0px) - 600px)/424*8,24px)); */
+    padding: 16px 20px;
+    padding-inline-end: clamp(16px,16px + (100vw - var(280px,0px)  - 600px)/424*8,24px);
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.topbar>* {
+    pointer-events: auto;
+    white-space: nowrap;
+}
+
+.back-foward-home-btn-container {
+    display: flex;
+    gap: 8px;
+}
+
+.back-foward-home-btn-container
+.topbar-back-btn-disabled:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+
+.back-foward-home-btn-container
+.topbar-back-btn {
+    align-items: center;
+    background-color: rgba(0, 0, 0, .7);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    height: 32px;
+    justify-content: center;
+    position: relative;
+    width: 32px;
+}
+
+.back-btn{
+    opacity: 1;
+    fill: currentColor;
+    width: 16px;
+    height: 16px;
+}
+
+.back-foward-home-btn-container
+.topbar-forward-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .7);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    height: 32px;
+    justify-content: center;
+    position: relative;
+    width: 32px;
+}
+
+.forward-btn {
+    opacity: 1;
+    fill: currentColor;
+    width: 16px;
+    height: 16px;
+}
+
+.user-btn-container {
+    padding: 0;
+}
+
+.user-btn-container
+.signup-btn {
+    padding-inline-start: 8px;
+}
+
+.signup-btn {
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 9999px;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    touch-action: manipulation;
+    transition-duration: 33ms;
+    transition-property: background-color, border-color, color, box-shadow, filter, transform;
+    user-select: none;
+    vertical-align: middle;
+    transform: translate3d(0px, 0px, 0px);
+    color: #a7a7a7;
+    min-inline-size: 0px;
+    min-block-size: 48px;
+    padding-block-start: 8px;
+    padding-block-end: 8px;
+    padding-inline-end: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-btn {
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    touch-action: manipulation;
+    transition-duration: 33ms;
+    transition-property: background-color, border-color, color, box-shadow, filter, transform;
+    user-select: none;
+    vertical-align: middle;
+    transform: translate3d(0px, 0px, 0px);
+    padding: 0px;
+    min-inline-size: 0px;
+}
+
+.login-btn-inner {
+    box-sizing: border-box;
+    position: relative;
+    background-color: #fff;
+    color: #000000;
+    display: flex;
+    border-radius: 9999px;
+    font-size: inherit;
+    min-block-size: 48px;
+    align-items: center;
+    justify-content: center;
+    padding-block-start: 8px;
+    padding-block-end: 8px;
+    padding-inline-start: 32px;
+    padding-inline-end: 32px;
+}
+
+.logout-btn {
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    touch-action: manipulation;
+    transition-duration: 33ms;
+    transition-property: background-color, border-color, color, box-shadow, filter, transform;
+    user-select: none;
+    vertical-align: middle;
+    transform: translate3d(0px, 0px, 0px);
+    padding: 0px;
+    min-inline-size: 0px;
+}
+
+.logout-btn-inner {
+    box-sizing: border-box;
+    position: relative;
+    background-color: #fff;
+    color: #000000;
+    display: flex;
+    border-radius: 9999px;
+    font-size: inherit;
+    min-block-size: 48px;
+    align-items: center;
+    justify-content: center;
+    padding-block-start: 8px;
+    padding-block-end: 8px;
+    padding-inline-start: 32px;
+    padding-inline-end: 32px;
+}
+
+
+.signup-btn:active,
+.signup-btn:focus,
+.login-btn:active,
+.login-btn:focus,
+.logout-btn:active,
+.logout-btn:focus,
+.topbar-back-btn:active,
+.topbar-back-btn:focus,
+.topbar-forward-btn:active,
+.topbar-forward-btn:focus {
+    outline: none;
+}
+
+
+
+
+
+

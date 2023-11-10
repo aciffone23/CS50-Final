@@ -1,3 +1,28 @@
+html {
+    height: 100%;
+    background-color: #000;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    line-height: normal;
+    width: 100%;
+}
+
+.main-container,
+.root-container {
+    height: 100%;
+    position: relative;
+}
+
+.main-container {
+    isolation: isolate;
+    width: 100%;
+    z-index: 0;
+}
+
 .login-header-container{
     padding: 48px 32px 0px;
     width: 100%;
@@ -8,3 +33,17 @@
     color: #ffffff;
 }
 
+.overall-container {
+    background-color: #000;
+    display: grid;
+    gap: 8px;
+    grid-template-areas: "left-sidebar main-view right-sidebar"
+    "now-playing-bar now-playing-bar now-playing-bar";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    min-height: 100%;
+    padding: 8px;
+    position: relative;
+    width: 100%;
+}

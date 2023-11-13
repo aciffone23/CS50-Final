@@ -8,6 +8,10 @@
     /* z-index: 1; */
 }
 
+a {
+    text-decoration: none;
+}
+
 .sidebar-container, 
 .navbar-dark{
     display: flex !important;
@@ -36,48 +40,71 @@
     padding: 8px 12px !important;
     list-style: none !important;
 }
-.navbar-nav .nav-link {
-    color: #b3b3b3 !important; 
-}
 
-.navbar-nav .nav-link:hover {
-    color: white !important; 
+.nav-link:hover .home-icon-active path,
+.nav-link:hover .home-not-active path,
+.nav-link:hover .search-icon-active path,
+.nav-link:hover .search-not-active path,
+.nav-link:hover .home-span,
+.library-collapse-btn:hover,
+.library-collapse-btn:hover .library-svg path,
+.plus-playlist:hover  {
+    color: #fff;
 }
-
-.nav-item a:hover span {
-    color: white;
-  }
-  
 
 .nav-item {
     padding: 4px 12px !important;
 }
 
 .nav-link {
-    align-items: center;
-    display: flex;
-    gap: 20px; 
-    height: 40px;
+    align-items: center !important;
+    display: flex !important;
+    gap: 20px !important; 
+    height: 40px !important;
+    color: #b3b3b3 !important;
+}
+
+.home-not-active {
+    display: block;
     color: #b3b3b3;
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
 }
 
-#home {
-    color: white;
+.home-icon-active {
+    color: #fff;
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
 }
 
-#home span {
-    color: white;
+.home-icon-active * {
+    box-sizing: border-box;
 }
 
-.nav-link span {
-    padding-left: 10px;
+.home-span {
+    box-sizing: border-box;
+    margin-block: 0px;
     font-size: 1rem;
     font-weight: 700;
 }
 
-.nav-link i{
-    height: 24px;
+.search-icon-active {
+    color: #fff;
+    display: block;
     width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+.search-not-active {
+    color: #b3b3b3;
+    display: block;
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
 }
 
 .playlist-box {
@@ -130,11 +157,20 @@
     vertical-align: middle;
     border: none;
     color: #b3b3b3;
+    align-items: center;
 }
 
 .library-wrapper {
-    /* display: flex; */
+    display: flex;
     margin-inline-end: 12px;
+}
+
+.library-svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+    display: block;
+    color: #b3b3b3;
 }
 
 .create-playlist-btn {
@@ -159,6 +195,13 @@
   .create-playlist-btn:focus {
     outline: none; 
   }
+
+.plus-playlist {
+    fill:currentColor;
+    width: 16px;
+    height: 16px;
+    color: #b3b3b3;
+}
 
 
 

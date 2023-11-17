@@ -1,0 +1,76 @@
+<section>
+    <div class="home-page-container">
+        <div class="home-page-content">
+                <section class="home-playlists">
+                    <div class="playlist-header-container">
+                        <div class="playlist-header-wrapper">
+                            <div class="playlist-header">
+                                <h2 class="playlist-header-text">
+                                    Spotify Playlists
+                                </h2>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playlist-album-container" style="grid-gap: 18px; min-width: 372px;">
+                        {% for playlist in playlists %}
+                        <div class="playlist-wrapper">
+                            <div class="home-playlist-container">
+                                <div class="top-img-container">
+                                    <!-- See If can find card colors from API lookup -->
+                                    <div class="top-img-div">
+                                        <div class="img-container">
+                                            <div>
+                                                <img class="top-img" src="{{ playlist.image_url }}">
+                                            </div>
+                                        </div>
+                                        <div class="play-button-container">
+                                            <div class="play-button-wrapper">
+                                                <button class="play-button-btn">
+                                                    <span class="play-btn-span-wrapper">
+                                                        <span class="play-btn-span">
+                                                            <svg class="play-btn-svg">
+                                                                <path d="m 7.05 3.606 l 13.49 7.788 a 0.7 0.7 0 0 1 0 1.212 L 7.05 20.394 A 0.7 0.7 0 0 1 6 19.788 V 4.212 a 0.7 0.7 0 0 1 1.05 -0.606 Z"></path>
+                                                            </svg>
+                                                        </span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="img-bottom-container">
+                                        <a class="home-album-name">
+                                            <div class="home-album-text">{{ playlist.name }}</div>
+                                        </a>
+                                        <div class="home-album-description">{{ playlist.description }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <section>
+
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('resize', updateColumnCount);
+    
+        function updateColumnCount() {
+            const container = document.querySelector('.playlist-album-container');
+            const itemWidth = 177;
+            const gap = 18; 
+    
+            const availableWidth = container.offsetWidth;
+            const columnCount = Math.floor((availableWidth + gap) / (itemWidth + gap));
+    
+            container.style.setProperty('--column-count', columnCount);
+        }
+    
+        // Initial update on page load
+        updateColumnCount();
+    </script>
+</section>

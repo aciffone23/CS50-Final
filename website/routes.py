@@ -3,6 +3,7 @@ import os
 import base64
 from requests import post, get
 import json
+from datetime import datetime
 
 
 load_dotenv()
@@ -51,7 +52,14 @@ def get_songs_by_artist(token, artist_id):
     json_result = json.loads(result.content)["tracks"]
     return json_result
 
-
+def get_featured_playlists(token):
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%dT%H:%M:%S")
+    url = f"https://api.spotify.com/v1/browse/featured-playlists?country=Us&locale=sv_US&timestamp={formatted_time}&limit=20&offset=0"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    return json_result
 
 
 token = get_token()
@@ -59,7 +67,26 @@ result = search_for_artist(token, "ACDC")
 artist_id = result["id"]
 songs = get_songs_by_artist(token, artist_id)
 
-for idx, song in enumerate(songs):
-    print(f"{idx + 1}. {song['name']}")
+# for idx, song in enumerate(songs):
+#     print(f"{idx + 1}. {song['name']}")
 # print(songs)
 # print(result["name"])
+# print(get_featured_playlists(token))
+
+# featured_playlists = get_featured_playlists(token)
+
+# playlists = featured_playlists.get('playlists', {}).get('items', [])
+
+# for playlist in playlists:
+#     name = playlist.get('name', 'N/A')
+#     description = playlist.get('description', 'N/A')
+
+#     images = playlist.get('images', [])
+#     image_url = images[0]['url'] if images else 'N/A'
+
+#     print(f"Name: {name}")
+#     print(f"Description: {description}")
+#     print(f"Image URL: {image_url}")
+#     print("\n")
+
+

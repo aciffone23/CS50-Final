@@ -1,6 +1,13 @@
 <div class="right-side-container">
   <header class="topbar">
-    <!-- <div class="topbar-spacer"></div> -->
+    <div class="topbar-spacer"></div>
+    <script>
+      // Have to change this wasn't working properly. 
+      window.addEventListener('scroll', function () {
+        const scrollPercentage = Math.min(1, window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100).toFixed(2);
+        document.documentElement.style.setProperty('--top-bar-opacity', scrollPercentage);
+      });
+    </script>       
     <div class="back-foward-home-btn-container">
       <button class="topbar-back-btn" disabled class="topbar-back-btn-disabled">
         <svg class="back-btn" viewBox="0 0 16 16">
@@ -55,4 +62,25 @@
       {% endif %}
     </div>
   </header>
+  <!-- Possibly move this to different file in future -->
+  <div class="main-view-container">
+    <div class="main-view-scroll-node">
+      <div class="main-view-os-padding">
+        <div class="main-view-os-viewport" style="overflow-y: scroll;">
+          <div class="main-view-os-content" style="padding: 0px; height: 100%; width: 100%;">
+            <div class="main-view-scroll-node-spacer"></div>
+            <div class="main-view-container-content" style="min-height: calc(((100vh - 64px) - 90px) - 519px);">
+              <main>
+                <div class="main-gradient" style="background-color: rgb(83, 83, 83);"></div>
+                <!-- May need includes here, this is the home page and most content -->
+                {% include "home-page.html" %}
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>

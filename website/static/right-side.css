@@ -33,6 +33,22 @@
     white-space: nowrap;
 }
 
+.topbar-spacer {
+    background-color: #121212;
+    border-top-left-radius: 8px;
+    border-top-left-radius: 8px;
+    bottom: 0;
+    left: 0;
+    opacity: var(--top-bar-opacity, 1);
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: background-color .25s;
+    z-index: -1;
+}
+
 .back-foward-home-btn-container {
     display: flex;
     gap: 8px;
@@ -217,6 +233,78 @@
 .topbar-forward-btn:active,
 .topbar-forward-btn:focus {
     outline: none;
+}
+
+.main-view-container {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+.main-view-scroll-node {
+    overflow: hidden !important;
+    height: 100%;
+}
+
+.main-view-os-padding {
+    overflow: hidden;
+    bottom: 0;
+    direction: inherit;
+    height: auto !important;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto !important;
+    z-index: 0;
+    box-sizing: inherit;
+}
+
+.main-view-os-viewport {
+    bottom: 0;
+    box-sizing: inherit !important;
+    direction: inherit !important;
+    left: 0;
+    margin: 0;
+    outline: none !important;
+    padding: 0;
+    position: absolute;
+    resize: none !important;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+.main-view-os-content {
+    direction: inherit;
+    display: block;
+    position: relative;
+    visibility: visible;
+    width: 100%;
+}
+
+.main-view-scroll-node-spacer {
+    height: 64px;
+    position: sticky;
+    top: 0;
+}
+
+.main-view-container-content {
+    scroll-behavior: smooth;
+    isolation: isolate;
+    padding-bottom: 32px;
+}
+
+.main-gradient {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6) 0, #121212 100%), url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=");
+    height: 332px;
+    margin-top: -64px;
+    position: absolute;
+    transition: background 1s ease;
+    width: 100%;
+    z-index: -1;
 }
 
 

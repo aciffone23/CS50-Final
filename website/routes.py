@@ -61,11 +61,78 @@ def get_featured_playlists(token):
     json_result = json.loads(result.content)
     return json_result
 
+def get_playlist_tracks(token, playlist_id):
+    url=f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    return json_result
+
+def get_track(token, track_id):
+    url=f"https://api.spotify.com/v1/tracks/{track_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    return json_result
+
+def get_playlist(token, playlist_id):
+    url=f"https://api.spotify.com/v1/playlists/{playlist_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    return json_result
+
 
 token = get_token()
-result = search_for_artist(token, "ACDC")
-artist_id = result["id"]
-songs = get_songs_by_artist(token, artist_id)
+
+# get_playlist_tracks(token, '37i9dQZF1DWWY64wDtewQt' )
+playlist_id = '37i9dQZF1DXcBWIGoYBM5M'
+track_id = '2FDTHlrBguDzQkp7PVj16Q'
+
+# track = get_track(token, track_id)
+# print(track)
+
+# playlist = get_playlist(token, playlist_id)
+
+# tracks = playlist.get('tracks', {}).get('items', [])
+
+# description = playlist.get('description', 'N/A')
+# likes = playlist.get('followers').get('total', 'N/A')
+# songs = playlist.get('tracks').get('total', 'N/A')
+# print(description, likes, songs)
+
+# print(playlist.get('tracks', []))
+
+# print(tracks)
+
+# track_info = []
+
+# for track in tracks:
+#     name = track.get('track', {}).get('name', 'N/A')
+#     artist = ", ".join([artist.get('name', 'N/A') for artist in track.get('track', {}).get('artists', [])])
+#     album = track.get('track', {}).get('album', {}).get('name', 'N/A')
+#     id = track.get('track', {}).get('id', 'N/A')
+
+
+#     duration_ms = track.get('track', {}).get('duration_ms', 'N/A')
+
+#     seconds = duration_ms // 1000
+#     minutes = seconds // 60
+#     remaining_seconds = seconds % 60
+
+#     images = track.get('track', {}).get('album', {}).get('images', [])
+#     image_url = images[2]['url'] if images else 'N/A'
+
+#     print(f"Name: {name}")
+#     print(f"artist: {artist}")
+#     print(f"album: {album}")
+#     print(f"Id: {id}")
+#     print(f"Image URL: {image_url}")
+#     print(f"{minutes} minutes and {remaining_seconds} seconds")
+
+# result = search_for_artist(token, "ACDC")
+# artist_id = result["id"]
+# songs = get_songs_by_artist(token, artist_id)
 
 # for idx, song in enumerate(songs):
 #     print(f"{idx + 1}. {song['name']}")
@@ -80,6 +147,7 @@ songs = get_songs_by_artist(token, artist_id)
 # for playlist in playlists:
 #     name = playlist.get('name', 'N/A')
 #     description = playlist.get('description', 'N/A')
+#     id = playlist.get('id', 'N/A')
 
 #     images = playlist.get('images', [])
 #     image_url = images[0]['url'] if images else 'N/A'
@@ -87,6 +155,8 @@ songs = get_songs_by_artist(token, artist_id)
 #     print(f"Name: {name}")
 #     print(f"Description: {description}")
 #     print(f"Image URL: {image_url}")
+#     print(f"Id: {id}")
+
 #     print("\n")
 
 

@@ -86,8 +86,8 @@ def get_playlist(token, playlist_id):
 token = get_token()
 
 # get_playlist_tracks(token, '37i9dQZF1DWWY64wDtewQt' )
-playlist_id = '37i9dQZF1DXcBWIGoYBM5M'
-track_id = '2FDTHlrBguDzQkp7PVj16Q'
+# playlist_id = '37i9dQZF1DXcBWIGoYBM5M'
+# track_id = '2FDTHlrBguDzQkp7PVj16Q'
 
 # track = get_track(token, track_id)
 # print(track)
@@ -98,6 +98,7 @@ track_id = '2FDTHlrBguDzQkp7PVj16Q'
 
 # description = playlist.get('description', 'N/A')
 # likes = playlist.get('followers').get('total', 'N/A')
+# name = playlist.get('name', 'N/A')
 # songs = playlist.get('tracks').get('total', 'N/A')
 # print(description, likes, songs)
 

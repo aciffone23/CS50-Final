@@ -12,7 +12,7 @@
     display: flex;
     margin: 0;
     max-width: 1955px;
-    padding: 0 clamp(16px, calc(16px + (100vw - var(--width-1, 280px) - var(--width-2, 0px) - 600px) / 424 * 8), 24px);;
+    padding: 0 clamp(16px, calc(16px + (100vw - var(--width-1, 280px) - var(--width-2, 0px) - 600px) / 424 * 8), 24px);
 }
 
 .home-playlists {

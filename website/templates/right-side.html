@@ -73,7 +73,11 @@
               <main>
                 <div class="main-gradient" style="background-color: rgb(83, 83, 83);"></div>
                 <!-- May need includes here, this is the home page and most content -->
-                {% include "home-page.html" %}
+                {% if current_page == "/" %}
+                    {% include "home-page.html" %}
+                {% elif "/playlist/" in current_page %}
+                    {% include "playlist-show.html" %}
+                {% endif %}
               </main>
             </div>
           </div>

@@ -29,7 +29,7 @@ def home():
                 'id': id
         })
 
-    return render_template("home.html", user=current_user, playlists=playlist_info)
+    return render_template("home.html", user=current_user, playlists=playlist_info, current_page="/")
 
 
 
@@ -41,43 +41,45 @@ def search():
 @views.route('/playlist/<playlist_id>', methods=['GET'])
 # @login_required
 def playlist_detail(playlist_id):
-    token = get_token()
-    playlist = get_playlist_tracks(token, playlist_id)
-    description = playlist.get('description', 'N/A')
-    likes = playlist.get('followers').get('total', 'N/A')
-    songs = playlist.get('tracks').get('total', 'N/A')
+        token = get_token()
+        playlist = get_playlist(token, playlist_id)
+
+        description = playlist.get('description', 'N/A')
+        likes = playlist.get('followers').get('total', 'N/A')
+        songs = playlist.get('tracks').get('total', 'N/A')
+        name = playlist.get('name', 'N/A')
+        background = playlist.get('images', [{}])[0].get('url')
+
+        tracks = playlist.get('items', [])
+
+        track_info = []
+
+        for track in tracks:
+                name = track.get('track', {}).get('name', 'N/A')
+                artist = ", ".join([artist.get('name', 'N/A') for artist in track.get('track', {}).get('artists', [])])
+                album = track.get('track', {}).get('album', {}).get('name', 'N/A')
+                id = track.get('track', {}).get('id', 'N/A')
 
 
-    tracks = playlist.get('items', [])
 
-    track_info = []
+                duration_ms = track.get('track', {}).get('duration_ms', 'N/A')
 
-    for track in tracks:
-        name = track.get('track', {}).get('name', 'N/A')
-        artist = ", ".join([artist.get('name', 'N/A') for artist in track.get('track', {}).get('artists', [])])
-        album = track.get('track', {}).get('album', {}).get('name', 'N/A')
-        id = track.get('track', {}).get('id', 'N/A')
+                seconds = duration_ms // 1000
+                minutes = seconds // 60
+                remaining_seconds = seconds % 60
 
+                images = track.get('track', {}).get('album', {}).get('images', [])
+                image_url = images[2]['url'] if images else 'N/A'
 
-        duration_ms = track.get('track', {}).get('duration_ms', 'N/A')
+                formatted_time = f"{minutes} : {remaining_seconds} "
 
-        seconds = duration_ms // 1000
-        minutes = seconds // 60
-        remaining_seconds = seconds % 60
+                track_info.append({
+                        'name': name,
+                        'artist': artist,
+                        'album': album,
+                        'image_url': image_url,
+                        'id': id,
+                        'duration': formatted_time
+                })
 
-        images = track.get('track', {}).get('album', {}).get('images', [])
-        image_url = images[2]['url'] if images else 'N/A'
-
-        formatted_time = f"{minutes} : {remaining_seconds} "
-
-        track_info.append({
-                'name': name,
-                'artist': artist,
-                'album': album,
-                'image_url': image_url,
-                'id': id,
-                'duration': formatted_time
-        })
-
-        return render_template("playlist-show.html", user=current_user, tracks=track_info, description=description, likes=likes, songs=songs)
-
+        return render_template("home.html", user=current_user, tracks=track_info, name=name,  description=description, likes=likes, songs=songs, current_page=f"/playlist/{playlist_id}", background=background)

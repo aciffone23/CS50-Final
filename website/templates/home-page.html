@@ -43,8 +43,14 @@
                                         </a>
                                         <div class="home-album-description">{{ playlist.description }}</div>
                                     </div>
-                                    <div class="pointer-container"></div>
-                            </div>
+                                    <div class="pointer-container" onclick="redirectToPlaylist('{{ playlist.id }}')"></div>
+
+                                    <script>
+                                      function redirectToPlaylist(playlistId) {
+                                        window.location.href = `/playlist/${playlistId}`;
+                                      }
+                                    </script>
+                                    </div>
                         </div>
                         {% endfor %}
                     </div>

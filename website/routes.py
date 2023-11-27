@@ -84,7 +84,6 @@ def get_playlist(token, playlist_id):
 
 
 token = get_token()
-
 # get_playlist_tracks(token, '37i9dQZF1DWWY64wDtewQt' )
 # playlist_id = '37i9dQZF1DXcBWIGoYBM5M'
 # track_id = '2FDTHlrBguDzQkp7PVj16Q'

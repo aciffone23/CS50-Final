@@ -1,27 +1,31 @@
 <section class="playlist-album-show-container">
   <div
     class="playlist-show-top-container content-spacing"
-    style="background-image: url('{{ background }}'); "
   >
+    <div class="playlist-show-top-wrapper"></div>
+    <div class="playlist-show-album-wrapper">
+        <div class="playlist-show-album-div">
+            <img class="playlist-show-album-img" src="{{  background  }}">
+        </div>
+    </div>
     <div class="playlist-show-top-contents">
-      <span class="playlist-word"> Playlist </span>
-      <span class="playlist-title">
-        <h1
-          class="playlist-title-text"
-          style="margin: 0 8em 0px 0.12em; width: 100%; font-size: 4.5em"
-        >
-          {{ album_name }}
-        </h1>
-      </span>
+        <span class="playlist-word"> Playlist </span>
+        <span class="playlist-title">
+            <h1
+              class="playlist-title-text"
+              style="margin: 0.08em 0px 0.12em; visibility: visible; width: 100%; font-size: 5vw"
+            >
+              {{ album_name }}
+            </h1>
+          </span>
       <span class="playlist-description">
         <div class="playlist-description-text">{{ description }}</div>
       </span>
       <div class="playlist-info">
         <span class="playlist-followers"> {{ likes }} likes </span>
         <span class="playlist-songs-and-total-duration">
-          {{ songs }} songs
-          <!-- Finish total duration for the playlist -->
-          <span class="playlist-total-duration"> </span>
+          {{ songs }} songs, 
+          <span class="playlist-description"> {{  total_time  }} </span>
         </span>
       </div>
     </div>
@@ -210,10 +214,9 @@
                   <div class="playlist-album-content-container">
                     <span>
                       <span class="playlist-album-content">
-                        <!-- add href to album link -->
                         <a
                           class="playlist-album-content-link"
-                          href="album/{{track.album}}"
+                          href="/album/{{  track.id  }}"
                         >
                           {{ track.album }}
                         </a>

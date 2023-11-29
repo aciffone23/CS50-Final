@@ -77,6 +77,8 @@
                     {% include "home-page.html" %}
                 {% elif "/playlist/" in current_page %}
                     {% include "playlist-show.html" %}
+                {% elif "/album/" in current_page %}
+                    {% include "album-show.html" %}
                 {% endif %}
               </main>
             </div>

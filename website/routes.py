@@ -82,8 +82,27 @@ def get_playlist(token, playlist_id):
     json_result = json.loads(result.content)
     return json_result
 
+def get_album(token, album_id):
+    url=f"https://api.spotify.com/v1/albums/{album_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    return json_result
+
+def get_artist(token, artist_id):
+    url=f"https://api.spotify.com/v1/artists/{artist_id}"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    return json_result
+
 
 token = get_token()
+
+# album = get_album(token, '07w0rG5TETcyihsEIZR3qG')
+# print(album)
+# background = album.get('images', [{}])[1].get('url')
+
 # get_playlist_tracks(token, '37i9dQZF1DWWY64wDtewQt' )
 # playlist_id = '37i9dQZF1DXcBWIGoYBM5M'
 # track_id = '2FDTHlrBguDzQkp7PVj16Q'

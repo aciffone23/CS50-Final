@@ -2,7 +2,11 @@ from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist
 from datetime import datetime
-import math
+import math, requests
+from colorthief import ColorThief
+from PIL import Image
+from io import BytesIO
+
 
 views = Blueprint('views', __name__)
 
@@ -51,11 +55,24 @@ def playlist_detail(playlist_id):
         likes = "{:,}".format(likes_total)
         songs = playlist.get('tracks').get('total', 'N/A')
         album_name = playlist.get('name', 'N/A')
-        background = playlist.get('images', [{}])[0].get('url')
         tracks = playlist.get('tracks', {}).get('items', [])
         album_type= playlist.get('album_type', 'N/A')
         total_duration_seconds = 0
 
+        background = playlist.get('images', [{}])[0].get('url')
+        response = requests.get(background)
+        image = Image.open(BytesIO(response.content))
+
+        image_buffer = BytesIO()
+        image.save(image_buffer, format="JPEG")
+        
+        color_thief = ColorThief(image_buffer)
+
+        palette = color_thief.get_palette(color_count=2, quality=1)
+
+        second_dominant_color = palette[0]
+
+        hex_color = "#{:02x}{:02x}{:02x}".format(*second_dominant_color)
 
         track_info = []
         for track in tracks:
@@ -97,8 +114,6 @@ def playlist_detail(playlist_id):
 
                 images = track.get('track', {}).get('album', {}).get('images', [])
                 image_url = images[2]['url'] if images else 'N/A'
-                print(id)
-
                 track_info.append({
                         'name': name,
                         'artist': artist,
@@ -118,7 +133,7 @@ def playlist_detail(playlist_id):
                 
         return render_template("home.html", user=current_user, tracks=track_info, album_name=album_name,  description=description, 
                                likes=likes, songs=songs, current_page=f"/playlist/{playlist_id}", background=background, album_type=album_type,
-                               total_time=total_time)
+                               total_time=total_time, hex_color=hex_color)
 
 @views.route('/album/<album_id>', methods=['GET'])
 # @login_required
@@ -131,7 +146,6 @@ def album_detail(album_id):
         tracks = album.get('tracks', {}).get('items', [])
 
         images = album.get('images', [])
-        background = images[1]['url'] if images else 'N/A'
         album_type= album.get('album_type', 'N/A')
         first_artist = album.get('artists', [{}])[0]
         artist_id = first_artist.get('id', 'N/A')
@@ -139,6 +153,21 @@ def album_detail(album_id):
         release_date = album.get('release_date', 'N/A')
         parsed_date = datetime.strptime(release_date, "%Y-%m-%d")
         year = parsed_date.year
+
+        background = images[1]['url'] if images else 'N/A'
+        response = requests.get(background)
+        image = Image.open(BytesIO(response.content))
+
+        image_buffer = BytesIO()
+        image.save(image_buffer, format="JPEG")
+        
+        color_thief = ColorThief(image_buffer)
+
+        palette = color_thief.get_palette(color_count=5, quality=1)
+
+        second_dominant_color = palette[0]
+
+        hex_color = "#{:02x}{:02x}{:02x}".format(*second_dominant_color)
 
         artist = get_artist(token, artist_id)
         artist_images = artist.get('images', [])
@@ -180,4 +209,4 @@ def album_detail(album_id):
                 
         return render_template("home.html", user=current_user, tracks=album_info, album_name=album_name, songs=songs, 
                                current_page=f"/album/{album_id}", background=background, album_type=album_type, artist_image=artist_image, 
-                               artist_name=artist_name, year=year, total_time=total_time)
+                               artist_name=artist_name, year=year, total_time=total_time, hex_color=hex_color)

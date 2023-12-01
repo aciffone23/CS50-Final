@@ -854,7 +854,7 @@
     color: #a7a7a7;
 }
 
-.playlist-title-artist-content:hover {
+.playlist-title-artist-content a:hover {
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
@@ -1030,3 +1030,70 @@
     }
 }
 
+.playlist-show-date-and-copyright-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
+.playlist-show-date {
+    font-size: 0.875rem;
+    margin-block: 0px;
+    font-weight: 400;
+    color: #b3b3b3;
+}
+
+.playlist-show-copyright-container {
+    color: #b3b3b3;
+}
+
+.playlist-show-copyright {
+    box-sizing: border-box;
+    margin-block: 0px;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: inherit;
+}
+
+.album-show-artist-album-list {
+    margin-top: 48px;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    max-width: 100%;
+    min-height: 300px;
+    position: relative;
+}
+
+.more-by-artist-wrapper {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.more-by-artist-div {
+    display: block;
+    flex-grow: 1;
+    line-height: normal;
+    min-width: 0;
+}
+
+.more-by-artist-header {
+    box-sizing: border-box;
+    margin-block: 0px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.more-by-artist-link {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: none;
+    color: #fff;
+    text-decoration: none;
+}

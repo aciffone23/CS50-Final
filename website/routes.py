@@ -4,6 +4,7 @@ import base64
 from requests import post, get
 import json
 from datetime import datetime
+import requests
 
 
 load_dotenv()
@@ -96,8 +97,53 @@ def get_artist(token, artist_id):
     json_result = json.loads(result.content)
     return json_result
 
+def get_artist_image(token, artist_id):
+    url = f"https://api.spotify.com/v1/artists/{artist_id}"
+    headers = get_auth_header(token)
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        artist_data = response.json()
+        images = artist_data.get('images', [])
+        image_url = images[1]['url'] if images else 'N/A'
+        return image_url
+    else:
+        print(f"Error fetching artist image. Status code: {response.status_code}")
+        return 'N/A'
+    
+def get_artist_albums(token, artist_id):
+    url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups=single%2Calbum&limit=7"
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+
+    albums_info = []
+    for album in json_result.get('items', []):
+        images = album.get('images', [])
+        background = images[1]['url'] if images else 'N/A'
+        id = album.get('id', 'N/A')
+        album_name = album.get('name', 'N/A')
+
+        release_date = album.get('release_date', 'N/A')
+        parsed_date = datetime.strptime(release_date, "%Y-%m-%d")
+        formatted_date = parsed_date.strftime("%B %d, %Y")
+        year = parsed_date.year
+
+        albums_info.append({
+            'background': background,
+            'album_name': album_name,
+            'formatted_date': formatted_date,
+            'year': year,
+            'id': id
+        })
+
+    return albums_info
+
 
 token = get_token()
+
+# albums = get_artist_albums(token, '2LIk90788K0zvyj2JJVwkJ')
+# print(albums)
 
 # album = get_album(token, '07w0rG5TETcyihsEIZR3qG')
 # print(album)

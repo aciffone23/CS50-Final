@@ -187,7 +187,7 @@
                     <div class="playlist-title-content">
                       <div class="playlist-title-content-container">
                         <!-- add href to track link -->
-                        <a class="playlist-title-content-link">
+                        <a class="playlist-title-content-link" href="/track/{{  track.id  }}">
                           <div class="playlist-title-content-text">
                             {{ track.name }}
                           </div>
@@ -201,8 +201,13 @@
                           class="playlist-title-artist-container {% if track.explicit %}explicit{% endif %}"
                         >
                           <div class="playlist-title-artist-content">
-                            <!-- add href to artist link -->
-                            <a>{{ track.artist }}</a>
+                            <div class="playlist-title-artist-content">
+                                {% for artist_info in track.artists_info %}
+                                  <a href="/artist/{{  artist_info.id  }}">
+                                      {{ artist_info.name }}
+                                  </a> {% if not loop.last %}, {% endif %}
+                                 {% endfor %}
+                              </div>
                           </div>
                         </span>
                       </div>
@@ -228,6 +233,97 @@
             </div>
           </div>
         </div>
+        <div class="playlist-show-date-and-copyright-container">
+            <div>
+                <p class="playlist-show-date">
+                    {{ formatted_date  }}
+                </p>
+                <div class="playlist-show-copyright-container">
+                    {% for copyright in copyrights %}
+                        <p class="playlist-show-copyright">{{ copyright.text }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="content-spacing">
+        <section class="album-show-artist-album-list">
+            <div class="more-by-artist-container">
+                <div class="more-by-artist-wrapper">
+                    <div class="more-by-artist-div">
+                        <h2 class="more-by-artist-header">
+                            <!-- add href if add artist discography -->
+                            <a class="more-by-artist-link">
+                                More by {{  artist_name  }}
+                            </a>
+                        </h2>
+                    </div>
+                    <!-- If add artist discography  -->
+                    <!-- <a>
+                        <span>
+
+                        </span>
+                    </a> -->
+                </div>
+            </div>
+            <div class="playlist-album-container" style="grid-gap: 18px; min-width: 372px;">
+                {% for album in albums_data %}
+                <div class="playlist-wrapper">
+                    <div class="home-playlist-container">
+                            <div class="top-img-div">
+                                <div class="img-container">
+                                    <div>
+                                        <img class="top-img" src="{{ album.background }}">
+                                    </div>
+                                </div>
+                                <div class="play-button-container">
+                                    <div class="play-button-wrapper">
+                                        <button class="play-button-btn">
+                                            <span class="play-btn-span-wrapper">
+                                                <span class="play-btn-span">
+                                                    <svg class="play-btn-svg" viewBox="0 0 24 24">
+                                                        <path d="m 7.05 3.606 l 13.49 7.788 a 0.7 0.7 0 0 1 0 1.212 L 7.05 20.394 A 0.7 0.7 0 0 1 6 19.788 V 4.212 a 0.7 0.7 0 0 1 1.05 -0.606 Z"></path>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="img-bottom-container">
+                                <a class="home-album-name">
+                                    <div class="home-album-text">{{ album.album_name }}</div>
+                                </a>
+                                <div class="home-album-description">{{ album.year }}</div>
+                            </div>
+                            <div class="pointer-container" onclick="redirectToAlbum('{{ album.id }}')"></div>
+
+                            <script>
+                              function redirectToAlbum(albumId) {
+                                window.location.href = `/album/${albumId}`;
+                              }
+                            </script>
+                            </div>
+                </div>
+                {% endfor %}
+            </div>
+            <script>
+                window.addEventListener('resize', updateColumnCount);
+            
+                function updateColumnCount() {
+                    const container = document.querySelector('.playlist-album-container');
+                    const itemWidth = 177;
+                    const gap = 18; 
+            
+                    const availableWidth = container.offsetWidth;
+                    const columnCount = Math.floor((availableWidth + gap) / (itemWidth + gap));
+            
+                    container.style.setProperty('--column-count', columnCount);
+                }
+            
+                updateColumnCount();
+            </script>
+        </section>
       </div>
     </div>
   </section>

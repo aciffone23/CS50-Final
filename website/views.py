@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist
+from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist, get_track, get_artist_image, get_artist_albums
 from datetime import datetime
 import math, requests
 from colorthief import ColorThief
@@ -77,12 +77,12 @@ def playlist_detail(playlist_id):
         track_info = []
         for track in tracks:
                 name = track.get('track', {}).get('name', 'N/A')
-                artist = ", ".join([artist.get('name', 'N/A') for artist in track.get('track', {}).get('artists', [])])
+                artists_info = [{'name': artist.get('name', 'N/A'), 'id': artist.get('id', 'N/A')} for artist in track.get('track', {}).get('artists', [])]
                 album = track.get('track', {}).get('album', {}).get('name', 'N/A')
                 id = track.get('track', {}).get('album', {}).get('id', 'N/A')
                 explicit = track.get('track', {}).get('explicit', 'N/A')
                 added = track.get('added_at', 'N/A')
-
+                track_id = track.get('track', {}).get('id', 'N/A')
                 if added != 'N/A':
                         added_value = datetime.strptime(added, '%Y-%m-%dT%H:%M:%SZ')
                         current_date = datetime.now()
@@ -104,7 +104,6 @@ def playlist_detail(playlist_id):
                 else:
                         added_info = 'N/A'
 
-
                 duration_ms = track.get('track', {}).get('duration_ms', 'N/A')
 
                 seconds = duration_ms // 1000
@@ -116,13 +115,14 @@ def playlist_detail(playlist_id):
                 image_url = images[2]['url'] if images else 'N/A'
                 track_info.append({
                         'name': name,
-                        'artist': artist,
+                        'artists_info': artists_info,
                         'album': album,
                         'image_url': image_url,
                         'id': id,
                         'duration': formatted_time,
                         'explicit': explicit,
                         'added': added_info, 
+                        'track_id': track_id,
                 })
                 total_duration_seconds += seconds
         
@@ -133,7 +133,7 @@ def playlist_detail(playlist_id):
                 
         return render_template("home.html", user=current_user, tracks=track_info, album_name=album_name,  description=description, 
                                likes=likes, songs=songs, current_page=f"/playlist/{playlist_id}", background=background, album_type=album_type,
-                               total_time=total_time, hex_color=hex_color)
+                               total_time=total_time, hex_color=hex_color, )
 
 @views.route('/album/<album_id>', methods=['GET'])
 # @login_required
@@ -150,8 +150,10 @@ def album_detail(album_id):
         first_artist = album.get('artists', [{}])[0]
         artist_id = first_artist.get('id', 'N/A')
         artist_name = first_artist.get('name', 'N/A')
+
         release_date = album.get('release_date', 'N/A')
         parsed_date = datetime.strptime(release_date, "%Y-%m-%d")
+        formatted_date = parsed_date.strftime("%B %d, %Y")
         year = parsed_date.year
 
         background = images[1]['url'] if images else 'N/A'
@@ -173,12 +175,16 @@ def album_detail(album_id):
         artist_images = artist.get('images', [])
         artist_image = artist_images[1]['url'] if artist_images else 'N/A'
 
+        copyrights = album.get('copyrights', [])
+
         total_duration_seconds = 0
+
+        albums_data = get_artist_albums(token, artist_id)
 
         album_info = []
         for track in tracks:
                 name = track.get('name', 'N/A')
-                artist = ", ".join([artist.get('name', 'N/A') for artist in track.get('artists', [])])
+                artists_info = [{'name': artist.get('name', 'N/A'), 'id': artist.get('id', 'N/A')} for artist in track.get('artists', [])]
                 id = track.get('id', 'N/A')
                 explicit = track.get('explicit', 'N/A')
                 duration_ms = track.get('duration_ms', 'N/A')
@@ -190,11 +196,12 @@ def album_detail(album_id):
 
                 album_info.append({
                         'name': name,
-                        'artist': artist,
+                        'artists_info': artists_info,
                         'id': id,
                         'duration': formatted_time,
                         'explicit': explicit,
                 })
+                print(artists_info)
                 total_duration_seconds += seconds
 
         if total_duration_seconds >= 3600:
@@ -209,4 +216,63 @@ def album_detail(album_id):
                 
         return render_template("home.html", user=current_user, tracks=album_info, album_name=album_name, songs=songs, 
                                current_page=f"/album/{album_id}", background=background, album_type=album_type, artist_image=artist_image, 
-                               artist_name=artist_name, year=year, total_time=total_time, hex_color=hex_color)
+                               artist_name=artist_name, year=year, total_time=total_time, hex_color=hex_color, formatted_date=formatted_date,
+                               copyrights=copyrights, albums_data=albums_data)
+
+
+@views.route('/track/<track_id>', methods=['GET'])
+# @login_required
+def track_detail(track_id):
+        token = get_token()
+        track = get_track(token, track_id)
+
+        track_name = track.get('name', 'N/A')
+
+        album_info = track.get('album', {})
+        images = album_info.get('images', [])
+        track_type = album_info.get('album_type', 'N/A')
+        album_name = album_info.get('name', 'N/A')
+        album_id = album_info.get('id', 'N/A')
+
+        first_artist = track.get('artists', [{}])[0]
+        first_artist_id = first_artist.get('id', 'N/A')
+        first_artist_name = first_artist.get('name', 'N/A')
+        first_artist_picture = get_artist_image(token, first_artist_id)
+
+        artists = track.get('artists', [])
+        artist_data = []
+
+        for artist in artists:
+                artist_id = artist.get('id', 'N/A')
+                artist_name = artist.get('name', 'N/A')
+                artist_image = get_artist_image(token, artist_id)
+                artist_data.append({
+                        'id': artist_id,
+                        'name': artist_name,
+                        'image': artist_image,
+                })
+        # print(artist_data)
+        release_date = album_info.get('release_date', 'N/A')
+        parsed_date = datetime.strptime(release_date, "%Y-%m-%d")
+        year = parsed_date.year
+
+        background = images[1]['url'] if images else 'N/A'
+        response = requests.get(background)
+        image = Image.open(BytesIO(response.content))
+        image_buffer = BytesIO()
+        image.save(image_buffer, format="JPEG")
+        color_thief = ColorThief(image_buffer)
+        palette = color_thief.get_palette(color_count=5, quality=1)
+        second_dominant_color = palette[0]
+        hex_color = "#{:02x}{:02x}{:02x}".format(*second_dominant_color)
+
+        duration_ms = track.get('duration_ms', 'N/A')
+        seconds = duration_ms // 1000
+        minutes = seconds // 60
+        remaining_seconds = seconds % 60
+        formatted_time = f"{minutes}:{remaining_seconds:02d}"
+
+        return render_template("home.html", user=current_user, track_name=track_name, current_page=f"/track/{track_id}",
+                                background=background, track_type=track_type, artist_data=artist_data, album_name=album_name,
+                                album_id=album_id, year=year, total_time=formatted_time, hex_color=hex_color, first_artist_id=first_artist_id,
+                                first_artist_name=first_artist_name, first_artist_picture=first_artist_picture)

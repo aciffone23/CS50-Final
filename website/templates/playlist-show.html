@@ -191,7 +191,7 @@
                     />
                     <div class="playlist-title-content-container">
                       <!-- add href to track link -->
-                      <a class="playlist-title-content-link">
+                      <a class="playlist-title-content-link" href="/track/{{ track.track_id  }}">
                         <div class="playlist-title-content-text">
                           {{ track.name }}
                         </div>
@@ -205,8 +205,11 @@
                         class="playlist-title-artist-container {% if track.explicit %}explicit{% endif %}"
                       >
                         <div class="playlist-title-artist-content">
-                          <!-- add href to artist link -->
-                          <a>{{ track.artist }}</a>
+                          {% for artist_info in track.artists_info %}
+                            <a href="/artist/{{  artist_info.id  }}">
+                                {{ artist_info.name }}
+                            </a> {% if not loop.last %}, {% endif %}
+                           {% endfor %}
                         </div>
                       </span>
                     </div>

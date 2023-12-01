@@ -10,13 +10,13 @@
             </div>
         </div>
       <div class="playlist-show-top-contents">
-        <span class="playlist-word"> {{  album_type | capitalize }} </span>
+        <span class="playlist-word"> Song </span>
         <span class="playlist-title">
           <h1
             class="playlist-title-text"
             style="margin: 0.08em 0px 0.12em; visibility: visible; width: 100%; font-size: 3.5vw"
           >
-            {{ album_name }}
+            {{ track_name }}
           </h1>
         </span>
         <span class="playlist-description">
@@ -26,20 +26,24 @@
             <div class="playlist-show-artist-container">
                 <figure class="artist-img-wrapper" style="width: 24px; height: 24px;">
                     <div class="artist-img-wrapper-div" style="width: 24px; height: 24px; inset-inline-start: 0px;">
-                        <img class="artist-img-img" src="{{  artist_image  }}">
+                        <img class="artist-img-img" src="{{  first_artist_picture  }}">
                     </div>
                 </figure>
                 <span class="playlist-show-artist-name">
-                    <a class="playlist-show-artist-name-link" href="/artist/{{  artist_id  }}">
-                        {{  artist_name  }}
+                    <a class="playlist-show-artist-name-link" href="/artist/{{  first_artist_id  }}">
+                        {{  first_artist_name  }}
                     </a>
                 </span>
             </div>
             <span class="playlist-show-year">
+                {{ album_name  }}
+            </span>
+            <span class="playlist-show-year">
+              <a class="playlist-show-artist-name-link" href="/album/{{  album_id  }}">
                 {{  year  }}
+              </a>
             </span>
           <span class="playlist-songs-and-total-duration">
-            {{ songs }} songs,
             <span class="playlist-total-duration"> {{  total_time  }}</span>
           </span>
         </div>
@@ -104,7 +108,37 @@
         </div>
       </div>
       <div class="content-spacing">
-        
+        <div class="track-artists-container">
+          <div class="track-artists-grid-container">
+            <div class="track-artists-link-container">
+              {% for artist in artist_data %}
+                  <div>
+                      <div class="track-artist-container">
+                          <div class="track-artist-img-container" style="width: 80px; height: 80px;">
+                              <img class="track-artist-img" src="{{ artist.image }}">
+                          </div>
+                          <div class="track-artist-name-container">
+                              <span class="track-artist-text">Artist</span>
+                              <a class="track-artist-link" href="/artist/{{ artist.id }}">
+                                  <div class="track-artist-name">{{ artist.name }}</div>
+                              </a>
+                          </div>
+                          <div class="track-show-wrapper" data-artist-id="{{ artist.id }}"></div>
+                      </div>
+                  </div>
+                  <script>
+                      document.addEventListener('DOMContentLoaded', function () {
+                          var trackShowWrapper = document.querySelector('.track-show-wrapper[data-artist-id="{{ artist.id }}"]');
+                          trackShowWrapper.addEventListener('click', function () {
+                              var artistId = "{{ artist.id }}";
+                              window.location.href = "/artist/" + artistId;
+                          });
+                      });
+                  </script>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

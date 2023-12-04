@@ -39,7 +39,6 @@
     margin-right: clamp(16px, calc(16px + ((100vw - 280px - 0px - 600px) / 424) * 8), 24px);
     background-color: transparent;
     border: 0;
-    cursor: pointer;
     transition: transform .1s linear;
     align-items: flex-end;
     align-self: flex-end;
@@ -1095,5 +1094,9 @@
     white-space: nowrap;
     user-select: none;
     color: #fff;
+    text-decoration: none;
+}
+
+.home-album-name:hover {
     text-decoration: none;
 }

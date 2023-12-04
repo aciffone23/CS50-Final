@@ -192,7 +192,6 @@ def album_detail(album_id):
                 minutes = seconds // 60
                 remaining_seconds = seconds % 60
                 formatted_time = f"{minutes}:{remaining_seconds:02d}"
-                print(artist)
 
                 album_info.append({
                         'name': name,
@@ -201,7 +200,6 @@ def album_detail(album_id):
                         'duration': formatted_time,
                         'explicit': explicit,
                 })
-                print(artists_info)
                 total_duration_seconds += seconds
 
         if total_duration_seconds >= 3600:
@@ -251,7 +249,6 @@ def track_detail(track_id):
                         'name': artist_name,
                         'image': artist_image,
                 })
-        # print(artist_data)
         release_date = album_info.get('release_date', 'N/A')
         parsed_date = datetime.strptime(release_date, "%Y-%m-%d")
         year = parsed_date.year

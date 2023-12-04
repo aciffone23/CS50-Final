@@ -266,7 +266,7 @@
                     </a> -->
                 </div>
             </div>
-            <div class="playlist-album-container" style="grid-gap: 18px; min-width: 372px;">
+            <div class="album-show-album-container" style="grid-gap: 18px; min-width: 372px;">
                 {% for album in albums_data %}
                 <div class="playlist-wrapper">
                     <div class="home-playlist-container">
@@ -291,7 +291,7 @@
                                 </div>
                             </div>
                             <div class="img-bottom-container">
-                                <a class="home-album-name">
+                                <a class="home-album-name" href="{{ album.id  }}">
                                     <div class="home-album-text">{{ album.album_name }}</div>
                                 </a>
                                 <div class="home-album-description">{{ album.year }}</div>
@@ -311,14 +311,19 @@
                 window.addEventListener('resize', updateColumnCount);
             
                 function updateColumnCount() {
-                    const container = document.querySelector('.playlist-album-container');
-                    const itemWidth = 177;
-                    const gap = 18; 
-            
+                    const container = document.querySelector('.album-show-album-container');
+                    const itemWidth = 200;
+                    const gap = 18;
+
                     const availableWidth = container.offsetWidth;
                     const columnCount = Math.floor((availableWidth + gap) / (itemWidth + gap));
-            
+
                     container.style.setProperty('--column-count', columnCount);
+
+                    const playlistWrappers = container.querySelectorAll('.playlist-wrapper');
+                    playlistWrappers.forEach((wrapper, index) => {
+                        wrapper.style.display = index < columnCount ? 'grid' : 'none';
+                    });
                 }
             
                 updateColumnCount();

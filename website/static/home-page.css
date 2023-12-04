@@ -63,6 +63,16 @@
     grid-template-rows: 1fr;
 }
 
+.album-show-album-container {
+    display: grid;
+    grid-gap: 18px;
+    grid-template-columns: repeat(var(--column-count), minmax(0,1fr));
+    min-width: 372px;
+    /* grid-auto-rows: 0; */
+    grid-template-rows: 1fr;
+    grid-auto-flow: column;
+}
+
 .home-page-container {
     height: 100%;
 }
@@ -203,6 +213,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    max-width: 145px;
 }
 
 .home-album-description {

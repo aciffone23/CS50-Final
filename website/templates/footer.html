@@ -106,21 +106,54 @@
                     <div class="footer-middle-bottom-container">
                         <!-- add code to dynamic update player time just placeholder now -->
                         <div class="player-time-elapsed-text">0:00</div>
-                        <div class="player-playback-bar">
+                        <div class="player-playback-bar" id="playerPlaybackBar">
                             <label class="hidden-visually">
                                 <!-- placeholder values for playback bar values -->
                                 <input type="range" min="0" max="duration_seconds" step="5" aria-valuetext="elapsed_text/duration" value="elapsed_time">
                             </label>
                             <!-- % should be the calc percentage of elapsed / duration -->
-                            <div class="player-playback-bar-content" style="--progress-bar-transform: 0%;">
+                            <div class="player-playback-bar-content" style="--progress-bar-transform: 20%;">
                                 <div class="player-playback-bar-background-container">
                                     <div class="player-playback-bar-background">
-                                        <div class="player-playback-bar-front"></div>
+                                        <div class="player-playback-bar-front" id="progressBarFront"></div>
                                     </div>
-                                    <div class="some-div"></div>
+                                    <div class="some-div" id="positionIndicator"></div>
                                 </div>
                                 <div style="width: 100%;"></div>
                             </div>
+                            <script>
+                                const playbackBar = document.getElementById('playerPlaybackBar');
+                                const progressBar = document.getElementById('progressBarFront');
+                                const positionIndicator = document.getElementById('positionIndicator');
+                                let isDragging = false;
+                            
+                                playbackBar.addEventListener('mousedown', (event) => {
+                                    isDragging = true;
+                                    handleDrag(event);
+                                });
+                            
+                                document.addEventListener('mousemove', (event) => {
+                                    if (isDragging) {
+                                        handleDrag(event);
+                                    }
+                                });
+                            
+                                document.addEventListener('mouseup', () => {
+                                    isDragging = false;
+                                });
+                            
+                                function handleDrag(event) {
+                                    const { left, width } = playbackBar.getBoundingClientRect();
+                                    const clickX = event.clientX - left;
+                                    let percentage = (clickX / width) * 100;
+
+                                    percentage = Math.max(0, Math.min(100, percentage));
+
+                                    progressBar.style.transform = `translateX(calc(-100% + ${percentage}%))`;
+                                    playbackBar.style.setProperty('--progress-bar-transform', `${percentage}%`);
+                                    positionIndicator.style.left = `${percentage}%`;
+                                }
+                            </script>
                         </div>
                         <div class="player-playback-duration">3:47</div>
                     </div>
@@ -176,18 +209,52 @@
                         <div class="volume-bar-container">
                             <div class="volume-bar-div">
                                 <label class="hidden-visually">
-                                    <!-- change volume bar to be dynamic -->
+                                    <!-- change volume bar input to be dynamic -->
                                     <input type="range" min="0" max="1" step="0.1" value="1">
                                 </label>
-                                <div class="player-playback-bar-content" style="--progress-bar-transform: 100%;">
+                                <div class="player-playback-bar-content" style="--progress-bar-transform: 100%;" id="volumeBar">
                                     <div class="player-playback-bar-background-container">
                                         <div class="player-playback-bar-background">
-                                            <div class="player-playback-bar-front"></div>
+                                            <div class="player-playback-bar-front" id="volumeProgressBar"></div>
                                         </div>
                                         <div class="some-div"></div>
                                     </div>
                                     <div style="width: 100%;"></div>
                                 </div>
+                                <script>
+                                    const volumeBar = document.getElementById('volumeBar');
+                                    const volumeProgressBar = document.getElementById('volumeProgressBar');
+                                    const volumePositionIndicator = document.getElementById('volumePositionIndicator');
+                                    let isDraggingVolume = false;
+                                
+                                    volumeBar.addEventListener('mousedown', (event) => {
+                                        isDraggingVolume = true;
+                                        handleVolumeDrag(event);
+                                    });
+                                
+                                    document.addEventListener('mousemove', (event) => {
+                                        if (isDraggingVolume) {
+                                            handleVolumeDrag(event);
+                                        }
+                                    });
+                                
+                                    document.addEventListener('mouseup', () => {
+                                        isDraggingVolume = false;
+                                    });
+                                
+                                    function handleVolumeDrag(event) {
+                                        const { left, width } = volumeBar.getBoundingClientRect();
+                                        const clickX = event.clientX - left;
+                                        let volumePercentage = (clickX / width) * 100;
+                                
+                                        volumePercentage = Math.max(0, Math.min(100, volumePercentage));
+                                
+                                        volumeProgressBar.style.transform = `translateX(calc(-100% + ${volumePercentage}%))`;
+                                        volumeBar.style.setProperty('--progress-bar-transform', `${volumePercentage}%`);
+                                        volumePositionIndicator.style.left = `${volumePercentage}%`;
+                                    }
+                                </script>
+                                                               
                             </div>
                         </div>
                     </div>

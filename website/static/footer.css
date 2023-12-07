@@ -612,12 +612,24 @@
     outline: none;
 }
 
-.volume-display-container:hover .player-playback-bar-front {
+.volume-display-container:hover .player-playback-bar-front,
+.volume-display-container:active .player-playback-bar-front {
     background-color: var(--is-active-color);
 }
 
-.player-playback-bar:hover .player-playback-bar-front {
+.volume-display-container:hover .some-div,
+.volume-display-container:active .some-div {
+    display: block;
+}
+
+.player-playback-bar:hover .player-playback-bar-front,
+.player-playback-bar:active .player-playback-bar-front {
     background-color: var(--is-active-color);
+}
+
+.player-playback-bar:hover .some-div, 
+.player-playback-bar:active .some-div {
+    display: block;
 }
 
 

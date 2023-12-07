@@ -1,7 +1,7 @@
 # Still In Progress 
 
 # Vibify
-#### Video Demo:  
+#### Video Demo:  https://www.youtube.com/watch?v=TOFPQcNf68c
 #### Description: Vibify is a full-stack web application that aims to replicate the core features and user experience of the popular music streaming platform, Spotify. The project is built using Flask for the backend, JavaScript for frontend interactivity, and Jinja2 as the templating engine. This Spotify clone provides users with a familiar and immersive music streaming experience.
 
 #### The views.py file handles the routes and corresponding functionality for rendering different pages of the application. The home route populates the homepage with featured playlists, showcasing playlist details such as name, description, and cover image. The playlist, album, and track routes populate the respecting pages with the corresponding playlist, album, and track. 

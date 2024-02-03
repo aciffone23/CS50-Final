@@ -181,7 +181,6 @@ def get_artist_top_tracks(token, artist_id):
     headers = get_auth_header(token)
     result = get(url, headers=headers)
     json_result = json.loads(result.content)
-    print(result)
     top_tracks = []
 
     for track in json_result.get('tracks', []):
@@ -208,6 +207,27 @@ def get_artist_top_tracks(token, artist_id):
             'track_id': track_id,
         })
     return top_tracks
+
+def get_similar_artists(token, artist_id):
+    url = f'https://api.spotify.com/v1/artists/{artist_id}/related-artists'
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+
+    top_artists = []
+    for artist in json_result.get('artists', []):
+        images = artist.get('images', [])
+        background = images[1]['url'] if images else 'N/A'
+        id = artist.get('id', 'N/A')
+        name = artist.get('name', 'N/A')
+
+        top_artists.append({
+            'background': background,
+            'id': id,
+            'name': name,
+        })
+
+    return top_artists
         
 # # Replace with actual values
 # your_token = get_token()

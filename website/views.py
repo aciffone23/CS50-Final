@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist, get_track, get_artist_image, get_artist_albums, get_track_recommendations, get_artist_top_tracks
+from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist, get_track, get_artist_image, get_artist_albums, get_track_recommendations, get_artist_top_tracks, get_similar_artists
 from datetime import datetime
 import math, requests
 from colorthief import ColorThief
@@ -244,8 +244,8 @@ def track_detail(track_id):
         
         recommended_data = get_track_recommendations(token, first_artist_id, track_id )
         top_tracks = get_artist_top_tracks(token, first_artist_id)
-        # print(recommended_data)
-        print(top_tracks)
+        similar_artists = get_similar_artists(token, first_artist_id)
+
         for artist in artists:
                 artist_id = artist.get('id', 'N/A')
                 artist_name = artist.get('name', 'N/A')
@@ -279,4 +279,9 @@ def track_detail(track_id):
                                 background=background, track_type=track_type, artist_data=artist_data, album_name=album_name,
                                 album_id=album_id, year=year, total_time=formatted_time, hex_color=hex_color, first_artist_id=first_artist_id,
                                 first_artist_name=first_artist_name, first_artist_picture=first_artist_picture, recommended_data=recommended_data,
-                                top_tracks=top_tracks)
+                                top_tracks=top_tracks, similar_artists=similar_artists)
+
+# @views.route('/artist/<artist_id>', methods=['GET'])
+# # @login_required
+# def artist_detail(artist_id):
+#         token = get_token()

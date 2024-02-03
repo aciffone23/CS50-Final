@@ -273,6 +273,66 @@
           <div class="recommended-songs-text-container">
             <span class="recommended-text">Fans also like</span>
           </div>
+          <div class="album-show-album-container" style="grid-gap: 18px; min-width: 372px;">
+            {% for artist in similar_artists %}
+            <div class="playlist-wrapper">
+                <div class="home-playlist-container">
+                        <div class="top-img-div">
+                            <div class="img-container">
+                                <div>
+                                    <img class="top-img" src="{{ artist.background }}" style="border-radius: 50%;">
+                                </div>
+                            </div>
+                            <div class="play-button-container">
+                                <div class="play-button-wrapper">
+                                    <button class="play-button-btn">
+                                        <span class="play-btn-span-wrapper">
+                                            <span class="play-btn-span">
+                                                <svg class="play-btn-svg" viewBox="0 0 24 24">
+                                                    <path d="m 7.05 3.606 l 13.49 7.788 a 0.7 0.7 0 0 1 0 1.212 L 7.05 20.394 A 0.7 0.7 0 0 1 6 19.788 V 4.212 a 0.7 0.7 0 0 1 1.05 -0.606 Z"></path>
+                                                </svg>
+                                            </span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="img-bottom-container">
+                            <div class="home-album-text">{{ artist.name }}</div>
+                            <div class="home-album-description">Artist</div>
+                        </div>
+                        <div class="pointer-container" onclick="redirectToArtist('{{ artist.id }}')"></div>
+
+                        <script>
+                          function redirectToArtist(artist) {
+                            window.location.href = `/artist/${artist.id}`;
+                          }
+                        </script>
+                        </div>
+            </div>
+            {% endfor %}
+        </div>
+        <script>
+            window.addEventListener('resize', updateColumnCount);
+        
+            function updateColumnCount() {
+                const container = document.querySelector('.album-show-album-container');
+                const itemWidth = 200;
+                const gap = 18;
+
+                const availableWidth = container.offsetWidth;
+                const columnCount = Math.floor((availableWidth + gap) / (itemWidth + gap));
+
+                container.style.setProperty('--column-count', columnCount);
+
+                const playlistWrappers = container.querySelectorAll('.playlist-wrapper');
+                playlistWrappers.forEach((wrapper, index) => {
+                    wrapper.style.display = index < columnCount ? 'grid' : 'none';
+                });
+            }
+        
+            updateColumnCount();
+        </script>
         </section>
         </div>
       </div>

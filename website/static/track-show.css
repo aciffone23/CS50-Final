@@ -102,3 +102,35 @@
 .track-show-wrapper:hover {
     cursor: pointer;
 }
+
+.recommended-songs-container {
+    margin-block-end: 40px;
+}
+
+.recommended-songs-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.recommended-text {
+    margin-block: 0px;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.based-on-song-text {
+    margin-block: 0px;
+    padding-block-end: 16px;
+    color: #b3b3b3;
+    font-size: .875rem;
+    font-weight: 400;
+}
+
+.popular-tracks-container {
+    margin-bottom: 40px;
+}
+
+.popular-tracks-container .playlist-show-bottom-content-wrapper .playlist-show-bottom-content {
+    height: 560px;
+}

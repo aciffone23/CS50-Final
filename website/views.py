@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist, get_track, get_artist_image, get_artist_albums
+from website.routes import get_featured_playlists, get_token, get_album, get_playlist, get_artist, get_track, get_artist_image, get_artist_albums, get_track_recommendations, get_artist_top_tracks
 from datetime import datetime
 import math, requests
 from colorthief import ColorThief
@@ -76,13 +76,15 @@ def playlist_detail(playlist_id):
 
         track_info = []
         for track in tracks:
-                name = track.get('track', {}).get('name', 'N/A')
-                artists_info = [{'name': artist.get('name', 'N/A'), 'id': artist.get('id', 'N/A')} for artist in track.get('track', {}).get('artists', [])]
-                album = track.get('track', {}).get('album', {}).get('name', 'N/A')
-                id = track.get('track', {}).get('album', {}).get('id', 'N/A')
-                explicit = track.get('track', {}).get('explicit', 'N/A')
+                name = track.get('track', {}).get('name') if track and track.get('track') else 'N/A'
+                if name == 'N/A':
+                        continue 
+                artists_info = [{'name': artist.get('name', 'N/A'), 'id': artist.get('id', 'N/A')} for artist in (track.get('track', {}) or {}).get('artists', [])]
+                album = (track.get('track', {}) or {}).get('album', {}).get('name', 'N/A')
+                id = (track.get('track', {}) or {}).get('album', {}).get('id', 'N/A')
+                explicit = (track.get('track', {}) or {}).get('explicit', 'N/A')
                 added = track.get('added_at', 'N/A')
-                track_id = track.get('track', {}).get('id', 'N/A')
+                track_id = (track.get('track', {}) or {}).get('id', 'N/A')
                 if added != 'N/A':
                         added_value = datetime.strptime(added, '%Y-%m-%dT%H:%M:%SZ')
                         current_date = datetime.now()
@@ -239,7 +241,11 @@ def track_detail(track_id):
 
         artists = track.get('artists', [])
         artist_data = []
-
+        
+        recommended_data = get_track_recommendations(token, first_artist_id, track_id )
+        top_tracks = get_artist_top_tracks(token, first_artist_id)
+        # print(recommended_data)
+        print(top_tracks)
         for artist in artists:
                 artist_id = artist.get('id', 'N/A')
                 artist_name = artist.get('name', 'N/A')
@@ -272,4 +278,5 @@ def track_detail(track_id):
         return render_template("home.html", user=current_user, track_name=track_name, current_page=f"/track/{track_id}",
                                 background=background, track_type=track_type, artist_data=artist_data, album_name=album_name,
                                 album_id=album_id, year=year, total_time=formatted_time, hex_color=hex_color, first_artist_id=first_artist_id,
-                                first_artist_name=first_artist_name, first_artist_picture=first_artist_picture)
+                                first_artist_name=first_artist_name, first_artist_picture=first_artist_picture, recommended_data=recommended_data,
+                                top_tracks=top_tracks)

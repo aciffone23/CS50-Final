@@ -139,5 +139,85 @@ def get_artist_albums(token, artist_id):
 
     return albums_info
 
+def get_track_recommendations(token, artist_id, track_id):
+    url = f'https://api.spotify.com/v1/recommendations?limit=5&market=US&seed_artists={artist_id}&seed_tracks={track_id}'
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+
+    # print(headers)
+    # print(result)
+    # print(json_result)
+
+    recommendations = []
+    for rec in json_result.get('tracks', []):
+        images = rec.get('album', {}).get('images', [])
+        background = images[1]['url'] if images else 'N/A'
+        id = rec.get('album', {}).get('id', 'N/A')
+        track_id = rec.get('id', 'N/A')
+        album_name = rec.get('name', 'N/A')
+        duration_ms = rec.get('duration_ms', 'N/A')
+        seconds = duration_ms // 1000
+        minutes = seconds // 60
+        remaining_seconds = seconds % 60
+        formatted_time = f"{minutes}:{remaining_seconds:02d}"
+        artists_info = [{'name': artist.get('name', 'N/A'), 'id': artist.get('id', 'N/A')} for artist in rec.get('artists', [])]
+        explicit = rec.get('explicit', 'N/A')
+
+        recommendations.append({
+            'background': background,
+            'album_name': album_name,
+            'id': id,
+            'formatted_time': formatted_time,
+            'artists_info': artists_info,
+            'explicit': explicit,
+            'track_id': track_id,
+        })
+    
+    return recommendations
+
+def get_artist_top_tracks(token, artist_id):
+    url = f'https://api.spotify.com/v1/artists/{artist_id}/top-tracks?market=us'
+    headers = get_auth_header(token)
+    result = get(url, headers=headers)
+    json_result = json.loads(result.content)
+    print(result)
+    top_tracks = []
+
+    for track in json_result.get('tracks', []):
+        images = track.get('album', {}).get('images', [])
+        background = images[1]['url'] if images else 'N/A'
+        id = track.get('album', {}).get('id', 'N/A')
+        track_id = track.get('id', 'N/A')
+        album_name = track.get('name', 'N/A')
+        duration_ms = track.get('duration_ms', 'N/A')
+        seconds = duration_ms // 1000
+        minutes = seconds // 60
+        remaining_seconds = seconds % 60
+        formatted_time = f"{minutes}:{remaining_seconds:02d}"
+        artists_info = [{'name': artist.get('name', 'N/A'), 'id': artist.get('id', 'N/A')} for artist in track.get('artists', [])]
+        explicit = track.get('explicit', 'N/A')
+
+        top_tracks.append({
+            'background': background,
+            'album_name': album_name,
+            'id': id,
+            'formatted_time': formatted_time,
+            'artists_info': artists_info,
+            'explicit': explicit,
+            'track_id': track_id,
+        })
+    return top_tracks
+        
+# # Replace with actual values
+# your_token = get_token()
+# your_artist_id = '2LIk90788K0zvyj2JJVwkJ'
+# # your_track_id = '4xhsWYTOGcal8zt0J161CU'
+
+# # # Call the function
+# results = get_artist_top_tracks(your_token, your_artist_id)
+
+# print(results)
+
 
 

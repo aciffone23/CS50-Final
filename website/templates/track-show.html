@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="playlist-show-bottom-container">
+    <div class="playlist-show-bottom-container" style="height: 560px;">
       <div
         class="playlist-show-bottom-gradient"
         style="background-color: {{  hex_color  }}"
@@ -138,6 +138,142 @@
               {% endfor %}
             </div>
           </div>
+        </div>
+        <div class="recommended-songs-container">
+          <div class="recommended-songs-text-container">
+            <span class="recommended-text">Recommended</span>
+            <span class="based-on-song-text">Based on this song</span>
+          </div>
+          <div class="playlist-show-bottom-content-wrapper">
+            <div class="playlist-show-bottom-content-headers" style="top: 64px">
+              <div
+                class="playlist-show-bottom-content-headers-wrapper dynamic-grid"
+              >
+                <div class="playlist-show-numbers"></div>
+                <div class="playlist-header-title-div">
+                  <div class="playlist-header-title-content">
+                    <span class="playlist-header-title-span">Title</span>
+                  </div>
+                </div>
+                <div class="playlist-header-album-div">
+                  <div class="playlist-header-album-content">
+                    <span class="playlist-header-album-span">Album</span>
+                  </div>
+                </div>
+                <div class="playlist-header-date-div">
+                  <div class="playlist-header-date-content">
+                    <span class="playlist-header-date-span"></span>
+                  </div>
+                </div>
+                <div class="playlist-header-duration-div">
+                  <div class="playlist-header-duration-content">
+                    <svg class="playlist-header-duration-svg" viewBox="0 0 16 16">
+                      <path
+                        d="M 8 1.5 a 6.5 6.5 0 1 0 0 13 a 6.5 6.5 0 0 0 0 -13 Z M 0 8 a 8 8 0 1 1 16 0 A 8 8 0 0 1 0 8 Z"
+                      ></path>
+                      <path
+                        d="M 8 3.25 a 0.75 0.75 0 0 1 0.75 0.75 v 3.25 H 11 a 0.75 0.75 0 0 1 0 1.5 H 7.25 V 4 A 0.75 0.75 0 0 1 8 3.25 Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="playlist-show-bottom-content"
+              style="height: {{ recommended_data|length * 56 }}px;"
+            >
+              <div class="top-container" style="height: 1008px">
+                <div
+                  class="top-placeholders dynamic-grid"
+                  style="height: calc(100% - 1008px)"
+                >
+                  <div class="number-placeholder"></div>
+                  <div class="title-placeholder"></div>
+                  <div class="album-placeholder"></div>
+                  <div class="date-added-placeholder"></div>
+                  <div class="duration-placeholder"></div>
+                  <div style="height: 1008px"></div>
+                </div>
+                <div style="transform: translateY(0px)">
+                  {% for track in recommended_data %}
+                    {% include "track-component.html" %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="popular-tracks-container">
+          <div>
+            <span class="based-on-song-text">Popular Tracks by</span>
+            <h2 class="recommended-text">{{  first_artist_name  }}</h2>
+          </div>
+          <div class="playlist-show-bottom-content-wrapper">
+            <div class="playlist-show-bottom-content-headers" style="top: 64px">
+              <div
+                class="playlist-show-bottom-content-headers-wrapper dynamic-grid"
+              >
+                <div class="playlist-show-numbers"></div>
+                <div class="playlist-header-title-div">
+                  <div class="playlist-header-title-content">
+                    <span class="playlist-header-title-span">Title</span>
+                  </div>
+                </div>
+                <div class="playlist-header-album-div">
+                  <div class="playlist-header-album-content">
+                    <span class="playlist-header-album-span">Album</span>
+                  </div>
+                </div>
+                <div class="playlist-header-date-div">
+                  <div class="playlist-header-date-content">
+                    <span class="playlist-header-date-span"></span>
+                  </div>
+                </div>
+                <div class="playlist-header-duration-div">
+                  <div class="playlist-header-duration-content">
+                    <svg class="playlist-header-duration-svg" viewBox="0 0 16 16">
+                      <path
+                        d="M 8 1.5 a 6.5 6.5 0 1 0 0 13 a 6.5 6.5 0 0 0 0 -13 Z M 0 8 a 8 8 0 1 1 16 0 A 8 8 0 0 1 0 8 Z"
+                      ></path>
+                      <path
+                        d="M 8 3.25 a 0.75 0.75 0 0 1 0.75 0.75 v 3.25 H 11 a 0.75 0.75 0 0 1 0 1.5 H 7.25 V 4 A 0.75 0.75 0 0 1 8 3.25 Z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="playlist-show-bottom-content"
+              style="height: {{ top_tracks|length * 56 }}px;"
+            >
+              <div class="top-container" style="height: 1008px">
+                <div
+                  class="top-placeholders dynamic-grid"
+                  style="height: calc(100% - 1008px)"
+                >
+                  <div class="number-placeholder"></div>
+                  <div class="title-placeholder"></div>
+                  <div class="album-placeholder"></div>
+                  <div class="date-added-placeholder"></div>
+                  <div class="duration-placeholder"></div>
+                  <div style="height: 1008px"></div>
+                </div>
+                <div style="transform: translateY(0px)">
+                  {% for track in top_tracks %}
+                    {% include "track-component.html" %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="fans-also-like-container">
+          <div class="recommended-songs-text-container">
+            <span class="recommended-text">Fans also like</span>
+          </div>
+        </section>
         </div>
       </div>
     </div>

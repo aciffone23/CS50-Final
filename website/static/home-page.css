@@ -242,7 +242,7 @@
     text-indent: 100%;
     top: 0;
     white-space: nowrap;
-    z-index: 0;
+    z-index: 7;
 }
 
 .playlist-wrapper:hover .pointer-container {

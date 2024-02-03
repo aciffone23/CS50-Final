@@ -81,6 +81,8 @@
                     {% include "album-show.html" %}
                 {% elif "/track/" in current_page %}
                     {% include "track-show.html" %}
+                {% elif "/artist/" in current_page %}
+                    {% include "artist-show.html" %}
                 {% endif %}
               </main>
             </div>

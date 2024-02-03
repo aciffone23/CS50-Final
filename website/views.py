@@ -281,7 +281,27 @@ def track_detail(track_id):
                                 first_artist_name=first_artist_name, first_artist_picture=first_artist_picture, recommended_data=recommended_data,
                                 top_tracks=top_tracks, similar_artists=similar_artists)
 
-# @views.route('/artist/<artist_id>', methods=['GET'])
-# # @login_required
-# def artist_detail(artist_id):
-#         token = get_token()
+@views.route('/artist/<artist_id>', methods=['GET'])
+# @login_required
+def artist_detail(artist_id):
+        token = get_token()
+        artist = get_artist(token, artist_id)
+
+        artist_name = artist.get('name', 'N/A')
+        images = artist.get('images', [])
+        background = images[0]['url'] if images else 'N/A'
+        response = requests.get(background)
+        image = Image.open(BytesIO(response.content))
+        image_buffer = BytesIO()
+        image.save(image_buffer, format="JPEG")
+        color_thief = ColorThief(image_buffer)
+        palette = color_thief.get_palette(color_count=5, quality=1)
+        second_dominant_color = palette[0]
+        hex_color = "#{:02x}{:02x}{:02x}".format(*second_dominant_color)
+
+        top_tracks = get_artist_top_tracks(token, artist_id)
+        similar_artists = get_similar_artists(token, artist_id)
+
+
+        return render_template("home.html", user=current_user, artist_name=artist_name, current_page=f"/artist/{artist_id}",
+                               background=background, hex_color=hex_color, top_tracks=top_tracks, similar_artists=similar_artists)

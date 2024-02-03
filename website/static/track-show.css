@@ -134,3 +134,20 @@
 .popular-tracks-container .playlist-show-bottom-content-wrapper .playlist-show-bottom-content {
     height: 560px;
 }
+
+.artist-show-background-img {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-attachment: scroll;
+    background-position: 50% 15%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 40vh;
+    min-height: var(--min-fluid-height);
+    content-visibility: auto;
+    contain: strict;
+}
